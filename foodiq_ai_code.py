@@ -7,7 +7,7 @@ import streamlit as st
 # Streamlit UI Integration
 st.title('🍔 FoodiQ: AI for Food Science')
 
-# File Upload for Food Composition Analyze :)
+# File Upload for Food Composition AnalyzeR
 st.subheader('Food Composition Analyzer')
 image_file = st.file_uploader('Upload a Food Image', type=['jpg', 'png'])
 
