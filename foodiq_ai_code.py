@@ -7,23 +7,23 @@ import streamlit as st
 # Streamlit UI Integration
 st.title('🍔 FoodiQ: AI for Food Science')
 
-# Food Composition Analyzer (Using Image Upload)
-st.subheader('Food Composition Analyzer_MLZ')
-image_file = st.file_uploader('Upload Food Image', type=['jpg', 'png'])
+# Food Composition Analyzer (Using Text Input)
+st.subheader('Food Composition Analyzer')
+ingredients_input = st.text_area('Enter Food Ingredients (comma-separated)')
 
-# Using Edamam Food Image Recognition API
-EDAMAM_API_URL = "https://api.edamam.com/api/food-database/v2/parser"
-APP_ID = "YOUR_EDAMAM_APP_ID"
-APP_KEY = "YOUR_EDAMAM_APP_KEY"
+# Using Edamam Nutrition Analysis API
+EDAMAM_API_URL = "https://api.edamam.com/api/nutrition-data"
+APP_ID = "fb5564b8"
+APP_KEY = "2d41abe87fc432f153dbb44bed8e5729"
 
-def analyze_food(image_file):
+def analyze_food(ingredients):
     try:
-        files = {'image': image_file.getvalue()}
         params = {
             'app_id': APP_ID,
-            'app_key': APP_KEY
+            'app_key': APP_KEY,
+            'ingr': ingredients
         }
-        result = requests.post(EDAMAM_API_URL, files=files, params=params)
+        result = requests.get(EDAMAM_API_URL, params=params)
         if result.status_code == 200:
             return result.json()
         else:
@@ -31,18 +31,20 @@ def analyze_food(image_file):
     except requests.exceptions.RequestException as e:
         return {'error': str(e)}
 
-if image_file and st.button('Analyze Food Composition'):
-    response = analyze_food(image_file)
-    if 'error' in response:
-        st.write(f"Error: {response['error']}")
+if st.button('Analyze Food Composition'):
+    if ingredients_input:
+        response = analyze_food(ingredients_input)
+        if 'error' in response:
+            st.write(f"Error: {response['error']}")
+        else:
+            calories = response.get('calories', 'N/A')
+            nutrients = response.get('totalNutrients', {})
+            st.write(f"Calories: {calories} kcal")
+            st.write("Nutrients:")
+            for nutrient, details in nutrients.items():
+                st.write(f"{details['label']}: {details['quantity']} {details['unit']}")
     else:
-        parsed_foods = response.get('parsed', [])
-        for food in parsed_foods:
-            food_name = food['food']['label']
-            nutrients = food['food']['nutrients']
-            st.write(f"### {food_name}")
-            for nutrient, value in nutrients.items():
-                st.write(f"{nutrient}: {value}")
+        st.write("Please enter ingredients.")
 
 
 # Spoilage Prediction Section
