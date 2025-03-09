@@ -8,13 +8,13 @@ import streamlit as st
 st.title('🍔 FoodiQ: AI for Food Science')
 
 # Food Composition Analyzer (Using Text Input)
-st.subheader('Food Composition Analyzer')
+st.subheader('Food Composition Analyzer_MLZ')
 ingredients_input = st.text_area('Enter Food Ingredients (comma-separated)')
 
 # Using Edamam Nutrition Analysis API
 EDAMAM_API_URL = "https://api.edamam.com/api/nutrition-data"
 APP_ID = "fb5564b8"
-APP_KEY = "2d41abe87fc432f153dbb44bed8e5729"
+APP_KEY = "ab649a48d201e2c6587a18534f679685"
 
 def analyze_food(ingredients):
     try:
