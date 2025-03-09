@@ -7,39 +7,42 @@ import streamlit as st
 # Streamlit UI Integration
 st.title('🍔 FoodiQ: AI for Food Science')
 
-# File Upload for Food Composition AnalyzeR
-st.subheader('Food Composition AnalyzerR')
-image_file = st.file_uploader('Upload a Food Image', type=['jpg', 'png'])
+# Food Composition Analyzer (Using Image Upload)
+st.subheader('Food Composition Analyzer_MLZ')
+image_file = st.file_uploader('Upload Food Image', type=['jpg', 'png'])
 
-# Using Edamam Food API
-EDAMAM_API_URL = "https://api.edamam.com/api/food-database/v2/nutrients"
-APP_ID = "6c8f1217"
-APP_KEY = "e7fcf200363926fbbaf4a5359dcb3a07"
-
+# Using Edamam Food Image Recognition API
+EDAMAM_API_URL = "https://api.edamam.com/api/food-database/v2/parser"
+APP_ID = "YOUR_EDAMAM_APP_ID"
+APP_KEY = "YOUR_EDAMAM_APP_KEY"
 
 def analyze_food(image_file):
     try:
-        headers = {
-            'Content-Type': 'application/json'
-        }
-        data = {
-            "ingr": ["image upload"]
-        }
+        files = {'image': image_file.getvalue()}
         params = {
             'app_id': APP_ID,
             'app_key': APP_KEY
         }
-        result = requests.post(EDAMAM_API_URL, json=data, params=params)
-        return result.json()
+        result = requests.post(EDAMAM_API_URL, files=files, params=params)
+        if result.status_code == 200:
+            return result.json()
+        else:
+            return {'error': 'Invalid response from API'}
     except requests.exceptions.RequestException as e:
         return {'error': str(e)}
 
-if image_file:
+if image_file and st.button('Analyze Food Composition'):
     response = analyze_food(image_file)
     if 'error' in response:
         st.write(f"Error: {response['error']}")
     else:
-        st.write(response)
+        parsed_foods = response.get('parsed', [])
+        for food in parsed_foods:
+            food_name = food['food']['label']
+            nutrients = food['food']['nutrients']
+            st.write(f"### {food_name}")
+            for nutrient, value in nutrients.items():
+                st.write(f"{nutrient}: {value}")
 
 
 # Spoilage Prediction Section
