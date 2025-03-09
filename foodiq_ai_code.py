@@ -11,11 +11,25 @@ st.title('🍔 FoodiQ: AI for Food Science')
 st.subheader('Food Composition Analyzer')
 image_file = st.file_uploader('Upload a Food Image', type=['jpg', 'png'])
 
-API_URL = "https://www.foodvisor.io/en/vision/"
+# Using Edamam Food API
+EDAMAM_API_URL = "https://api.edamam.com/api/food-database/v2/nutrients"
+APP_ID = "6c8f1217"
+APP_KEY = "e7fcf200363926fbbaf4a5359dcb3a07	—"
+
 
 def analyze_food(image_file):
     try:
-        result = requests.post(API_URL, files={'file': image_file})
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        data = {
+            "ingr": ["image upload"]
+        }
+        params = {
+            'app_id': APP_ID,
+            'app_key': APP_KEY
+        }
+        result = requests.post(EDAMAM_API_URL, json=data, params=params)
         return result.json()
     except requests.exceptions.RequestException as e:
         return {'error': str(e)}
