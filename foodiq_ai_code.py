@@ -8,13 +8,13 @@ import streamlit as st
 st.title('🍔 FoodiQ: AI for Food Science')
 
 # File Upload for Food Composition AnalyzeR
-st.subheader('Food Composition Analyzer')
+st.subheader('Food Composition AnalyzerR')
 image_file = st.file_uploader('Upload a Food Image', type=['jpg', 'png'])
 
 # Using Edamam Food API
 EDAMAM_API_URL = "https://api.edamam.com/api/food-database/v2/nutrients"
 APP_ID = "6c8f1217"
-APP_KEY = "e7fcf200363926fbbaf4a5359dcb3a07	—"
+APP_KEY = "e7fcf200363926fbbaf4a5359dcb3a07"
 
 
 def analyze_food(image_file):
