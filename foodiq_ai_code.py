@@ -11,7 +11,7 @@ st.title('🍔 FoodiQ: AI for Food Science')
 st.subheader('Food Composition Analyzer')
 image_file = st.file_uploader('Upload a Food Image', type=['jpg', 'png'])
 
-API_URL = "https://api.foodvision.com/analyze"
+API_URL = "https://vision.foodvisor.io/api/1.0/en"
 
 def analyze_food(image_file):
     try:
