@@ -12,7 +12,7 @@ st.subheader('Food Composition Analyzer_MLZ')
 ingredients_input = st.text_area('Enter Food Ingredients (comma-separated)')
 
 # Using Edamam Nutrition Analysis API
-EDAMAM_API_URL = "https://api.edamam.com/api/food-database"
+EDAMAM_API_URL = "https://api.edamam.com/api/food-database/v2/parser"
 APP_ID = "0494f386"
 APP_KEY = "aba13ff24526d54d65be08bb7e159cbb"
 
