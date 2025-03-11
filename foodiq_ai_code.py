@@ -13,8 +13,8 @@ ingredients_input = st.text_area('Enter Food Ingredients (comma-separated)')
 
 # Using Edamam Nutrition Analysis API
 EDAMAM_API_URL = "https://api.edamam.com/api/nutrition-data"
-APP_ID = "fb5564b8"
-APP_KEY = "ab649a48d201e2c6587a18534f679685"
+APP_ID = "6c8f12178"
+APP_KEY = "e7fcf200363926fbbaf4a5359dcb3a07"
 
 def analyze_food(ingredients):
     try:
