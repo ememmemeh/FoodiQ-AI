@@ -5,10 +5,10 @@ import numpy as np
 import streamlit as st
 
 # Streamlit UI Integration
-st.title('🍔 FoodiQ: AI for Food Science')
+st.title('🍔 meluzviAI for Food Science')
 
 # Food Composition Analyzer (Using Text Input)
-st.subheader('Food Composition Analyzer_MLZ / MEAL PLANNER')
+/st.subheader('Food Composition Analyzer_MLZ / MEAL PLANNER')
 ingredients_input = st.text_area('Enter Food Ingredients (comma-separated)')
 
 # Using Edamam Nutrition Analysis API
@@ -45,8 +45,6 @@ if st.button('Analyze Food Composition'):
                 st.write(f"{details['label']}: {details['quantity']} {details['unit']}")
     else:
         st.write("Please enter ingredients.")
-
-
 # Spoilage Prediction Section
 st.subheader('Food Spoilage Prediction')
 ingredients = st.text_input('Enter Ingredients (comma-separated)')
