@@ -7,44 +7,7 @@ import streamlit as st
 # Streamlit UI Integration
 st.title('🍔 meluzviAI for Food Science')
 
-# Food Composition Analyzer (Using Text Input)
-/st.subheader('Food Composition Analyzer_MLZ / MEAL PLANNER')
-ingredients_input = st.text_area('Enter Food Ingredients (comma-separated)')
 
-# Using Edamam Nutrition Analysis API
-EDAMAM_API_URL = "https://api.edamam.com/api/recipes/v2"
-APP_ID = "3f45f33b"
-APP_KEY = "e17b956be78e9af17684657261789a2"
-
-def analyze_food(ingredients):
-    try:
-        params = {
-            'app_id': APP_ID,
-            'app_key': APP_KEY,
-            'ingr': ingredients
-        }
-        result = requests.get(EDAMAM_API_URL, params=params)
-        if result.status_code == 200:
-            return result.json()
-        else:
-            return {'error': 'Invalid response from API'}
-    except requests.exceptions.RequestException as e:
-        return {'error': str(e)}
-
-if st.button('Analyze Food Composition'):
-    if ingredients_input:
-        response = analyze_food(ingredients_input)
-        if 'error' in response:
-            st.write(f"Error: {response['error']}")
-        else:
-            calories = response.get('calories', 'N/A')
-            nutrients = response.get('totalNutrients', {})
-            st.write(f"Calories: {calories} kcal")
-            st.write("Nutrients:")
-            for nutrient, details in nutrients.items():
-                st.write(f"{details['label']}: {details['quantity']} {details['unit']}")
-    else:
-        st.write("Please enter ingredients.")
 # Spoilage Prediction Section
 st.subheader('Food Spoilage Prediction')
 ingredients = st.text_input('Enter Ingredients (comma-separated)')
